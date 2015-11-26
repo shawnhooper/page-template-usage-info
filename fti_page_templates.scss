@@ -1,0 +1,27 @@
+#fti_page_templates_templateList,
+#fti_page_templates_pageList {
+	width:50%;
+
+	thead {
+		tr {
+			background-color:darkgrey;
+
+			td {
+				text-align: left;
+			}
+
+		}
+	}
+
+	tbody {
+		td:nth-of-type(3) {
+			text-align: right;
+		}
+	}
+}
+
+#fti_page_templates_form {
+	margin-bottom:10px;
+}
+
+#fti_page_templates_pageList * td { text-align: left !important; }
