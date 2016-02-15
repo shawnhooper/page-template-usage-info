@@ -4,8 +4,8 @@
 	Description: Provides usage information of custom page templates in the current theme
 	Version: 1.2
     Text Domain: pagetemplateusageinfo
-	Author: Fivesense Technologies Inc.
-	Author URI: http://www.fivesense.ca/
+	Author: Shawn Hooper
+	Author URI: http://www.shawnhooper.ca/
 
 	Copyright 2014-2016 Fivesense Technologies Inc. (support@fivesense.ca)
 
