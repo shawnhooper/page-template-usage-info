@@ -2,11 +2,12 @@
 /*
 	Plugin Name: Page Template Usage Info
 	Description: Provides usage information of custom page templates in the current theme
-	Version: 1.1
+	Version: 1.2
+    Text Domain: pagetemplateusageinfo
 	Author: Fivesense Technologies Inc.
 	Author URI: http://www.fivesense.ca/
 
-	Copyright 2014 Fivesense Technologies Inc. (support@fivesense.ca)
+	Copyright 2014-2016 Fivesense Technologies Inc. (support@fivesense.ca)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,7 +33,7 @@ add_action('admin_init', 'fti_page_templates_register_stylesheet');
 
 
 function fti_page_templates_register_menu() {
-    add_submenu_page('edit.php?post_type=page', 'Page Template Usage', 'Page Template Usage', 'administrator', 'fti_page_templates', 'fti_page_templates' );
+    add_submenu_page('edit.php?post_type=page', _x('Page Template Usage', 'Admin Menu Name', 'pagetemplateusageinfo'), _x('Page Template Usage', 'Admin Menu Name', 'pagetemplateusageinfo'), 'administrator', 'fti_page_templates', 'fti_page_templates' );
 }
 
 function fti_page_templates_register_stylesheet() {
@@ -64,7 +65,7 @@ function fti_page_templates() {
 }
 
 function fti_page_templates_summary() {
-    echo '<h1>Page Template Usage</h1>';
+    echo '<h1>' . _x('Page Template Usage', 'Admin Menu Name', 'pagetemplateusageinfo') . '</h1>';
 
     // Get the List of Templates from the theme
     $templates = get_page_templates();
@@ -75,8 +76,9 @@ function fti_page_templates_summary() {
     ksort($templates);
 
     // Print theme count info
-    echo sprintf('<p>There are <strong>%d</strong> templates included in the <strong>%s</strong> theme.</p>', count($templates), wp_get_theme());
-    echo '<table id="fti_page_templates_templateList"><thead><tr><th>Template Name</th><th>Template Filename</th><th># of Pages Using Template</th></tr></thead><tbody>';
+    echo sprintf('<p>' . _x('There are <strong>%d</strong> templates included in the <strong>%s</strong> theme.', 'Template Statistics', 'pagetemplateusageinfo') . '</p>', count($templates), wp_get_theme());
+
+    echo '<table id="fti_page_templates_templateList"><thead><tr><th>' . _x('Tempalte Name', 'Table Column Heading', 'pagetemplateusageinfo') . '</th><th>' . _x('Tempalte Filename', 'Table Column Heading', 'pagetemplateusageinfo') . '</th><th>' . _x('# of Pages Using Template', 'Table Column Heading', 'pagetemplateusageinfo') . '</th></tr></thead><tbody>';
 
     // Start with Default Template
     echo '<tr>';
@@ -97,26 +99,24 @@ function fti_page_templates_summary() {
 }
 
 function fti_page_templates_single($template_filename) {
-    echo '<h1>Page Template Usage: ' . $template_filename .'</h1>';
+    echo '<h1>' . _x('Page Template Usage', 'Admin Menu Name', 'pagetemplateusageinfo') . ': ' . $template_filename .'</h1>';
 
     // Get the pages that use this template
     if ($template_filename == 'page.php') $template_filename = 'default';
     $pages = fti_page_templates_get_templateUsage($template_filename);
 
     // Print Page Info
-    echo sprintf('<p>There are <strong>%d</strong> page(s) on this site that make use of the <strong>%s</strong> template.</p>', count($pages), $template_filename);
+    echo sprintf('<p>' . _x('There are <strong>%d</strong> page(s) on this site that make use of the <strong>%s</strong> template.', 'Template Statistics', 'pagetemplateusageinfo') . '</p>', count($pages), $template_filename);
+
+    echo '<form id="fti_page_templates_form" method="post" action="edit.php?post_type=page&page=fti_page_templates"><input type="submit" value="' . esc_attr_x('Return to Template List', 'Navigation Link Text', 'pagetemplateusageinfo') . '" /></form>';
 
 
-
-    echo '<form id="fti_page_templates_form" method="post" action="edit.php?post_type=page&page=fti_page_templates"><input type="submit" value="Return to Template List" /></form>';
-
-
-    echo '<table id="fti_page_templates_pageList"><thead><tr><th>ID</th><th>Title</th><th>Status</th><th>Author</th><th>Created</th><th>Modified</th><th>Actions</th></tr></thead><tbody>';
+    echo '<table id="fti_page_templates_pageList"><thead><tr><th>' . _x('ID', 'Table Column Header', 'pagetemplateusageinfo') . '</th><th>' . _x('Title', 'Table Column Header. Refers to a page title.', 'pagetemplateusageinfo') . '</th><th>' . _x('Status', 'Table Column Header. Refers to post status (published, draft, etc.)', 'pagetemplateusageinfo') . '</th><th>' . _x('Author', 'Table Column Header. Refers to the name of a page\'s author', 'pagetemplateusageinfo') . '</th><th>' . _x('Created', 'Table Column Header. The date a page was created.', 'pagetemplateusageinfo') . '</th><th>' . _x('Modified', 'Table Column Header. The date this page was last modified', 'pagetemplateusageinfo') . '</th><th>' . _x('Actions', 'The heading of a table column where the cells contains hyperlinks to interact with the data in that row (edit, delete, view, etc.)', 'pagetemplateusageinfo') . '</th></tr></thead><tbody>';
 
     // Loop through the pages
     foreach ($pages as $page) {
         echo '<tr>';
-        echo sprintf('<td>%d</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><a href="%s">View</a> | <a href="%s">Edit</a></td>', $page->ID, $page->post_title, $page->post_status, $page->post_author, $page->post_date, $page->post_modified, get_permalink($page->ID), get_edit_post_link($page->ID));
+        echo sprintf('<td>%d</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><a href="%s">' . _x('View', 'Link to view the selected page in your browser', 'pagetemplateusageinfo') . '</a> | <a href="%s">' . _x('Edit', 'Link - Edit the selected page', 'pagetemplateusageinfo') . '</a></td>', $page->ID, $page->post_title, $page->post_status, $page->post_author, $page->post_date, $page->post_modified, get_permalink($page->ID), get_edit_post_link($page->ID));
         echo '</tr>';
     }
 
