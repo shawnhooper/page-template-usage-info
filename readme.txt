@@ -24,6 +24,7 @@ You can also click on the count to access the list of pages that use a specific 
 
 = 1.3 =
 * Adds a new column to show if this page was created with the Gutenberg editor
+* Rewritten as a PHP class
 
 = 1.2 =
 * Internationalized strings. Ready for localization.
