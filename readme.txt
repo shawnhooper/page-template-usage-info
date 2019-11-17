@@ -3,7 +3,7 @@ Contributors: shooper
 Tags: templates, page
 Requires at least: 3.0.1
 Tested up to: 5.3.0
-Stable tag: trunk
+Stable tag: 1.3.0
 Text Domain: pagetemplateusageinfo
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
