@@ -2,7 +2,7 @@
 /*
 	Plugin Name: Page Template Usage Info
 	Description: Provides usage information of custom page templates in the current theme
-	Version: 1.2
+	Version: 1.3
     Text Domain: pagetemplateusageinfo
 	Author: Shawn Hooper
 	Author URI: http://www.shawnhooper.ca/
@@ -47,7 +47,7 @@ function fti_page_templates_get_templateUsage($template_filename = '') {
     global $wpdb;
 
     if ($template_filename != '') {
-        $sql = $wpdb->prepare("SELECT p.ID, u.display_name AS post_author, post_date, post_title, post_status, post_modified FROM " . $wpdb->prefix . "posts p INNER JOIN " . $wpdb->prefix . "users u ON p.post_author = u.ID  LEFT JOIN " . $wpdb->prefix . "postmeta pm ON p.ID = pm.post_id AND pm.meta_key = '_wp_page_template' WHERE p.post_type = 'page' AND p.post_status IN ('publish', 'draft')  AND pm.meta_value = '%s'", $template_filename);
+        $sql = $wpdb->prepare("SELECT p.ID, u.display_name AS post_author, post_date, post_title, post_status, post_modified, post_content FROM " . $wpdb->prefix . "posts p INNER JOIN " . $wpdb->prefix . "users u ON p.post_author = u.ID  LEFT JOIN " . $wpdb->prefix . "postmeta pm ON p.ID = pm.post_id AND pm.meta_key = '_wp_page_template' WHERE p.post_type = 'page' AND p.post_status IN ('publish', 'draft')  AND pm.meta_value = '%s'", $template_filename);
     } else {
         $sql = "SELECT IFNULL(pm.meta_value, 'page.php') AS template_filename, COUNT(*) AS pages_using FROM " . $wpdb->prefix . "posts p LEFT JOIN " . $wpdb->prefix . "postmeta pm ON p.ID = pm.post_id AND pm.meta_key = '_wp_page_template' WHERE p.post_type = 'page' AND p.post_status IN ('publish', 'draft') GROUP BY IFNULL(pm.meta_value, 'page.php')";
     }
@@ -78,7 +78,7 @@ function fti_page_templates_summary() {
     // Print theme count info
     echo sprintf('<p>' . _x('There are <strong>%d</strong> templates included in the <strong>%s</strong> theme.', 'Template Statistics', 'pagetemplateusageinfo') . '</p>', count($templates), wp_get_theme());
 
-    echo '<table id="fti_page_templates_templateList"><thead><tr><th>' . _x('Tempalte Name', 'Table Column Heading', 'pagetemplateusageinfo') . '</th><th>' . _x('Tempalte Filename', 'Table Column Heading', 'pagetemplateusageinfo') . '</th><th>' . _x('# of Pages Using Template', 'Table Column Heading', 'pagetemplateusageinfo') . '</th></tr></thead><tbody>';
+    echo '<table id="fti_page_templates_templateList"><thead><tr><th>' . _x('Template Name', 'Table Column Heading', 'pagetemplateusageinfo') . '</th><th>' . _x('Tempalte Filename', 'Table Column Heading', 'pagetemplateusageinfo') . '</th><th>' . _x('# of Pages Using Template', 'Table Column Heading', 'pagetemplateusageinfo') . '</th></tr></thead><tbody>';
 
     // Start with Default Template
     echo '<tr>';
@@ -111,16 +111,21 @@ function fti_page_templates_single($template_filename) {
     echo '<form id="fti_page_templates_form" method="post" action="edit.php?post_type=page&page=fti_page_templates"><input type="submit" value="' . esc_attr_x('Return to Template List', 'Navigation Link Text', 'pagetemplateusageinfo') . '" /></form>';
 
 
-    echo '<table id="fti_page_templates_pageList"><thead><tr><th>' . _x('ID', 'Table Column Header', 'pagetemplateusageinfo') . '</th><th>' . _x('Title', 'Table Column Header. Refers to a page title.', 'pagetemplateusageinfo') . '</th><th>' . _x('Status', 'Table Column Header. Refers to post status (published, draft, etc.)', 'pagetemplateusageinfo') . '</th><th>' . _x('Author', 'Table Column Header. Refers to the name of a page\'s author', 'pagetemplateusageinfo') . '</th><th>' . _x('Created', 'Table Column Header. The date a page was created.', 'pagetemplateusageinfo') . '</th><th>' . _x('Modified', 'Table Column Header. The date this page was last modified', 'pagetemplateusageinfo') . '</th><th>' . _x('Actions', 'The heading of a table column where the cells contains hyperlinks to interact with the data in that row (edit, delete, view, etc.)', 'pagetemplateusageinfo') . '</th></tr></thead><tbody>';
+    echo '<table id="fti_page_templates_pageList"><thead><tr><th>' . _x('ID', 'Table Column Header', 'pagetemplateusageinfo') . '</th><th>' . _x('Title', 'Table Column Header. Refers to a page title.', 'pagetemplateusageinfo') . '</th><th>' . _x('Status', 'Table Column Header. Refers to post status (published, draft, etc.)', 'pagetemplateusageinfo') . '</th><th>' . _x('Author', 'Table Column Header. Refers to the name of a page\'s author', 'pagetemplateusageinfo') . '</th><th>' . _x('Created', 'Table Column Header. The date a page was created.', 'pagetemplateusageinfo') . '</th><th>' . _x('Modified', 'Table Column Header. The date this page was last modified', 'pagetemplateusageinfo') . '</th><th>' . _x('Made with Gutenberg', 'Table Column Header.', 'pagetemplateusageinfo') . '</th><th>' . _x('Actions', 'The heading of a table column where the cells contains hyperlinks to interact with the data in that row (edit, delete, view, etc.)', 'pagetemplateusageinfo') . '</th></tr></thead><tbody>';
 
     // Loop through the pages
     foreach ($pages as $page) {
         echo '<tr>';
-        echo sprintf('<td>%d</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><a href="%s">' . _x('View', 'Link to view the selected page in your browser', 'pagetemplateusageinfo') . '</a> | <a href="%s">' . _x('Edit', 'Link - Edit the selected page', 'pagetemplateusageinfo') . '</a></td>', $page->ID, $page->post_title, $page->post_status, $page->post_author, $page->post_date, $page->post_modified, get_permalink($page->ID), get_edit_post_link($page->ID));
+        echo sprintf('<td>%d</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><a href="%s">' . _x('View', 'Link to view the selected page in your browser', 'pagetemplateusageinfo') . '</a> | <a href="%s">' . _x('Edit', 'Link - Edit the selected page', 'pagetemplateusageinfo') . '</a></td>', $page->ID, $page->post_title, $page->post_status, $page->post_author, $page->post_date, $page->post_modified, fti_page_templates_single_is_gutes($page), get_permalink($page->ID), get_edit_post_link($page->ID));
         echo '</tr>';
     }
 
     echo '</tbody></table>';
 
 
+}
+
+function fti_page_templates_single_is_gutes($page) {
+	// Thanks @clorith
+	return (false !== strpos( $page->post_content, '<!-- wp:' )) ? __('Yes', 'Status Indicator', 'pagetemplateusageinfo') : __('No', 'Status Indicator', 'pagetemplateusageinfo');
 }
