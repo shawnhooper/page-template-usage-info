@@ -2,7 +2,7 @@
 Contributors: shooper
 Tags: templates, page
 Requires at least: 3.0.1
-Tested up to: 4.4.2
+Tested up to: 5.3.0
 Stable tag: trunk
 Text Domain: pagetemplateusageinfo
 License: GPLv2 or later
