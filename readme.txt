@@ -1,17 +1,18 @@
 === Page Template Usage Info ===
 Contributors: shooper
-Tags: templates, page
+Tags: templates, page, reporting, blocks, gutenberg, reports, management, auditing
 Requires at least: 3.0.1
 Tested up to: 5.3.0
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 Text Domain: pagetemplateusageinfo
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Provides usage information of custom page templates in the current theme
+Shows you which pages are using which templates, and whether or they are built with Gutenberg or not.
 
 == Description ==
 This plugin generates a list of all the custom page templates available in the active Wordpress theme, and shows you how many pages use this template.
+It will also show you if the page contains any Gutenberg blocks or not.
 
 You can also click on the count to access the list of pages that use a specific template.
 
