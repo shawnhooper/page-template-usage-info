@@ -2,8 +2,8 @@
 Contributors: shooper
 Tags: templates, page, reporting, blocks, gutenberg, reports, management, auditing
 Requires at least: 3.0.1
-Tested up to: 5.3.0
-Stable tag: 1.3.1
+Tested up to: 6.0.2
+Stable tag: 1.3.2
 Text Domain: pagetemplateusageinfo
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -22,6 +22,13 @@ You can also click on the count to access the list of pages that use a specific 
 
 
 == Changelog ==
+
+= 1.3.2 =
+* Fixed undefined array key debug notices
+* Changed tested version to 6.0.2
+
+= 1.3.1 =
+* Documentation and Stable Version Update
 
 = 1.3 =
 * Adds a new column to show if this page was created with the Gutenberg editor

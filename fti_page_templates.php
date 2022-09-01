@@ -84,7 +84,7 @@ class PageTemplateUsageInfoPlugin {
 		/** @var $wpdb WPDB */
 		global $wpdb;
 
-		if ($template_filename != '') {
+		if ($template_filename !== '') {
 			$sql = $wpdb->prepare("SELECT p.ID, u.display_name AS post_author, post_date, post_title, post_status, post_modified, post_content FROM " . $wpdb->prefix . "posts p INNER JOIN " . $wpdb->prefix . "users u ON p.post_author = u.ID  LEFT JOIN " . $wpdb->prefix . "postmeta pm ON p.ID = pm.post_id AND pm.meta_key = '_wp_page_template' WHERE p.post_type = 'page' AND p.post_status IN ('publish', 'draft')  AND pm.meta_value = '%s'", $template_filename);
 		} else {
 			$sql = "SELECT IFNULL(pm.meta_value, 'page.php') AS template_filename, COUNT(*) AS pages_using FROM " . $wpdb->prefix . "posts p LEFT JOIN " . $wpdb->prefix . "postmeta pm ON p.ID = pm.post_id AND pm.meta_key = '_wp_page_template' WHERE p.post_type = 'page' AND p.post_status IN ('publish', 'draft') GROUP BY IFNULL(pm.meta_value, 'page.php')";
@@ -136,10 +136,14 @@ class PageTemplateUsageInfoPlugin {
 		echo sprintf('<td>%s</td><td>%s</td><td><a href="edit.php?post_type=page&page=fti_page_templates&template=%s">%d</a></td>', 'page.php', 'default', 'page.php', $templateUse['default']->pages_using);
 		echo '</tr>';
 
-		// Loop through the themes
+		// Loop through the templates
 		foreach ($templates as $template_name => $template_filename) {
 			echo '<tr>';
-			echo sprintf('<td>%s</td><td>%s</td><td><a href="edit.php?post_type=page&page=fti_page_templates&template=%s">%d</a></td>', $template_name, $template_filename, $template_filename, $templateUse[$template_filename]->pages_using);
+            $pages_using = 0;
+            if ( isset($templateUse[$template_filename]) ) {
+                $pages_using = $templateUse[$template_filename];
+            }
+			echo sprintf('<td>%s</td><td>%s</td><td><a href="edit.php?post_type=page&page=fti_page_templates&template=%s">%d</a></td>', $template_name, $template_filename, $template_filename, $pages_using);
 			echo '</tr>';
 		}
 
