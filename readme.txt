@@ -1,4 +1,4 @@
-=== Page Template Usage Info ===
+    === Page Template Usage Info ===
 Contributors: shooper
 Tags: templates, page, reporting, blocks, gutenberg, reports, management, auditing
 Requires at least: 3.0.1
