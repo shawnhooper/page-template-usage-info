@@ -2,7 +2,7 @@
 /*
 	Plugin Name: Page Template Usage Info
 	Description: Provides usage information of custom page templates in the current theme
-	Version: 1.3.3
+	Version: 1.3.4
     Text Domain: pagetemplateusageinfo
 	Author: Shawn Hooper
 	Author URI: http://www.shawnhooper.ca/
@@ -141,7 +141,7 @@ class PageTemplateUsageInfoPlugin {
 			echo '<tr>';
             $pages_using = 0;
             if ( isset($templateUse[$template_filename]) ) {
-                $pages_using = $templateUse[$template_filename];
+                $pages_using = $templateUse[$template_filename]->pages_using;
             }
 			echo sprintf('<td>%s</td><td>%s</td><td><a href="edit.php?post_type=page&page=fti_page_templates&template=%s">%d</a></td>', $template_name, $template_filename, $template_filename, $pages_using);
 			echo '</tr>';
