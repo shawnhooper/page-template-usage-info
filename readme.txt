@@ -3,7 +3,7 @@ Contributors: shooper
 Tags: templates, page, reporting, blocks, gutenberg, reports, management, auditing
 Requires at least: 3.0.1
 Tested up to: 6.0.2
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 Text Domain: pagetemplateusageinfo
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -22,6 +22,9 @@ You can also click on the count to access the list of pages that use a specific 
 
 
 == Changelog ==
+
+= 1.3.3 =
+* Missed a version tag
 
 = 1.3.2 =
 * Fixed undefined array key debug notices

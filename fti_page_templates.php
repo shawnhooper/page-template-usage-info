@@ -2,7 +2,7 @@
 /*
 	Plugin Name: Page Template Usage Info
 	Description: Provides usage information of custom page templates in the current theme
-	Version: 1.3.2
+	Version: 1.3.3
     Text Domain: pagetemplateusageinfo
 	Author: Shawn Hooper
 	Author URI: http://www.shawnhooper.ca/
