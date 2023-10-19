@@ -2,7 +2,7 @@
 Contributors: shooper
 Tags: templates, page, reporting, blocks, gutenberg, reports, management, auditing
 Requires at least: 3.0.1
-Tested up to: 6.0.2
+Tested up to: 6.4.0
 Stable tag: 1.3.4
 Text Domain: pagetemplateusageinfo
 License: GPLv2 or later
